@@ -101,6 +101,9 @@ module CFPropertyList
   #
   #  cftypes = CFPropertyList.guess(x,:convert_unknown_to_string => true,:converter_method => :to_hash)
   def guess(object, options = {})
+    # convert unknown types to strings by default
+    options = {:convert_unknown_to_string => true}.merge(options)
+    
     if(object.is_a?(Fixnum) || object.is_a?(Integer)) then
       return CFInteger.new(object)
     elsif(object.is_a?(Float) || (Object.const_defined?('BigDecimal') and object.is_a?(BigDecimal))) then
